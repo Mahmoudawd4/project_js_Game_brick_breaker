@@ -1,0 +1,189 @@
+const canvas = document.getElementById("myCanvas");
+
+
+
+const ctx = canvas.getContext("2d");
+
+
+
+// Paddle
+const paddleHeight = 10;
+const paddleWidth = 75;
+let paddleX = canvas.width - paddleWidth / 2;
+let paddleY = canvas.height - paddleHeight / 2;
+
+
+
+
+// Keyboard state
+let rightPressed = false;
+let leftPressed = false;
+
+
+
+
+// Bricks info var
+const brickRowCount = 15;
+const brickColumnCount = 10;
+const brickWidth = 50;
+const brickHeight = 20;
+const brickPadding = 2;
+const brickOffsetTop = 2;
+const brickOffsetLeft = 70;
+
+
+
+
+const bricks = [];
+
+for (let c = 0; c < brickColumnCount; c++) {
+    bricks[c] = [];
+    for (let r = 0; r < brickRowCount; r++) {
+        bricks[c][r] = {
+            x: 0,
+            y: 0,
+            status: 1,
+            type: "regular",
+        };
+    }
+}
+
+
+
+//print screen 
+function drawPaddle() {
+    ctx.beginPath();
+    ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+
+
+
+
+const screenText = {
+    start() {
+        ctx.font = "50px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("Press Enter to Start game ", canvas.width / 2, canvas.height / 2);
+    },
+  
+};
+
+
+
+// Game state
+let isLost = false;
+let isStarted = false;
+let isPaused = false;
+let isWin = false;
+let score = 0;
+let lives = 3;
+
+
+document.addEventListener("keydown", keyDownHandler);
+document.addEventListener("keyup", keyUpHandler);
+document.addEventListener("mousemove", mouseMoveHandler);
+
+
+
+function mouseMoveHandler(e) {
+    let relativeX = e.clientX - canvas.offsetLeft;
+    if (relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth / 2;
+    }
+
+
+
+}
+
+
+function drawBricks() {
+    for (let c = 0; c < brickColumnCount; c++) {
+        for (let r = 0; r < brickRowCount; r++) {
+            if (bricks[c][r].status === 1) {
+                let brickX = r * (brickWidth + brickPadding) + brickOffsetLeft;
+                let brickY = c * (brickHeight + brickPadding) + brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                ctx.beginPath();
+                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx.fillStyle =
+                "#000080";
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+    }
+}
+
+function keyDownHandler(e) {
+    if (e.keyCode === 39) {
+        rightPressed = true;
+    } else if (e.keyCode === 37) {
+        leftPressed = true;
+    }
+    // space button -- pause
+    if (e.keyCode === 32) {
+        if (isStarted && !isLost && !isWin) {
+            isPaused = !isPaused;
+        }
+    }
+}
+
+function keyUpHandler(e) {
+    if (e.keyCode === 39) {
+        rightPressed = false;
+    } else if (e.keyCode === 37) {
+        leftPressed = false;
+    }
+}
+
+
+function mouseMoveHandler(e) {
+    let relativeX = e.clientX - canvas.offsetLeft;
+    if (relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth / 2;
+    }
+}
+
+
+
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!isStarted) {
+        screenText.start();
+    } else if (isLost) {
+        screenText.lost();
+    } else if (isWin) {
+        screenText.win();
+    } else if (isPaused) {
+        screenText.pause();
+    } else {
+        drawBricks();
+        drawPaddle();
+        
+    
+    }
+    requestAnimationFrame(draw);
+}
+
+document.addEventListener("keydown", function (event) {
+    if (event.code === "Enter" && (!isStarted || isLost || isWin)) {
+        isStarted = true;
+        isLost = false;
+        isWin = false;
+        score = 0;
+        lives = 3;
+        for (let c = 0; c < brickColumnCount; c++) {
+            for (let r = 0; r < brickRowCount; r++) {
+                bricks[c][r].status = 1;
+            }
+        }
+    }
+});
+draw();
+
