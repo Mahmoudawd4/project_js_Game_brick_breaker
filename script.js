@@ -107,9 +107,27 @@ function mouseMoveHandler(e) {
     }
 }
 
+// Ball Movement
 function update() {
   ballX += dx;
   ballY += dy;
+}
+
+function checkWallsCollision() {
+    const hitLeftWall = ()=>(ballX < 0);
+    const hitRightWall = ()=>(ballX + (ballRadius*2) > canvas.width);
+    const hitTop = ()=>(ballY < 0);
+
+    if (hitLeftWall()) {
+        dx = -dx;
+        ballX = 0;
+    } else if (hitRightWall()) {
+        dx = -dx;
+        ballX = canvas.width - (ballRadius*2);
+    } else if (hitTop()) {
+        dy = -dy;
+        ballY = 0;
+    }
 }
 
 
@@ -180,6 +198,7 @@ function draw() {
         drawPaddle();
         drawBall();
         update();
+        checkWallsCollision();
     }
     requestId = requestAnimationFrame(draw);
 }
