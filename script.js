@@ -146,7 +146,9 @@ function checkWallsCollision() {
         dy = -dy;
         ballY = 0;
     } else if (hitBottom()) {
-        isLost = true;
+        lives--;
+        ballInit();
+        isLost = lives === 0 ? true : false;
     }
 }
 
