@@ -20,6 +20,18 @@ let ballSpeed = 7;
 let dx = ballSpeed * (Math.random() * 2 - 1);  // Random trajectory
 let dy = -ballSpeed; // Up
 
+// Ball initialization
+function ballInit() {
+    let ballRadius = 5;
+    ballX = canvas.width / 2;
+    ballY = canvas.height - paddleHeight - ballRadius;
+    ballSpeed = 7;
+    dx = ballSpeed * (Math.random() * 2 - 1);  // Random trajectory
+    dy = -ballSpeed; // Up
+}
+
+
+
 // Keyboard state
 let rightPressed = false;
 let leftPressed = false;
@@ -79,7 +91,12 @@ const screenText = {
         ctx.textAlign = "center";
         ctx.fillText("Press Enter to Start game ", canvas.width / 2, canvas.height / 2);
     },
-  
+    lost() {
+        ctx.font = "50px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+    },
 };
 
 
@@ -117,6 +134,7 @@ function checkWallsCollision() {
     const hitLeftWall = ()=>(ballX < 0);
     const hitRightWall = ()=>(ballX + (ballRadius*2) > canvas.width);
     const hitTop = ()=>(ballY < 0);
+    const hitBottom = ()=>(ballY + (ballRadius*2) > canvas.height);
 
     if (hitLeftWall()) {
         dx = -dx;
@@ -127,6 +145,8 @@ function checkWallsCollision() {
     } else if (hitTop()) {
         dy = -dy;
         ballY = 0;
+    } else if (hitBottom()) {
+        isLost = true;
     }
 }
 
@@ -199,8 +219,10 @@ function draw() {
         drawBall();
         update();
         checkWallsCollision();
+
+
+        requestId = requestAnimationFrame(draw);
     }
-    requestId = requestAnimationFrame(draw);
 }
 
 document.addEventListener("keydown", function (event) {
@@ -215,6 +237,8 @@ document.addEventListener("keydown", function (event) {
                 bricks[c][r].status = 1;
             }
         }
+        ballInit();
+        play();
     }
 });
 
