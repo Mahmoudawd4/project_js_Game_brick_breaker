@@ -9,11 +9,13 @@ const ctx = canvas.getContext("2d");
 // Paddle
 const paddleHeight = 10;
 const paddleWidth = 75;
-let paddleX = canvas.width - paddleWidth / 2;
-let paddleY = canvas.height - paddleHeight / 2;
+let paddleX = (canvas.width - paddleWidth) / 2;
+let paddleY = (canvas.height - paddleHeight);
 
-
-
+// The ball
+let ballRadius = 5;
+let ballX = canvas.width / 2;
+let ballY = canvas.height - paddleHeight - ballRadius;
 
 // Keyboard state
 let rightPressed = false;
@@ -58,8 +60,13 @@ function drawPaddle() {
     ctx.fill();
     ctx.closePath();
 }
-
-
+    
+function drawBall() {
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+    ctx.fillStyle = "#ctx";
+    ctx.fill();
+}
 
 
 const screenText = {
@@ -165,8 +172,7 @@ function draw() {
     } else {
         drawBricks();
         drawPaddle();
-        
-    
+        drawBall();
     }
     requestAnimationFrame(draw);
 }
