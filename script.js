@@ -16,6 +16,9 @@ let paddleY = (canvas.height - paddleHeight);
 let ballRadius = 5;
 let ballX = canvas.width / 2;
 let ballY = canvas.height - paddleHeight - ballRadius;
+let ballSpeed = 7;
+let dx = ballSpeed * (Math.random() * 2 - 1);  // Random trajectory
+let dy = -ballSpeed; // Up
 
 // Keyboard state
 let rightPressed = false;
@@ -60,7 +63,7 @@ function drawPaddle() {
     ctx.fill();
     ctx.closePath();
 }
-    
+
 function drawBall() {
     ctx.beginPath();
     ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
@@ -88,6 +91,7 @@ let isPaused = false;
 let isWin = false;
 let score = 0;
 let lives = 3;
+let requestId;
 
 
 document.addEventListener("keydown", keyDownHandler);
@@ -101,9 +105,11 @@ function mouseMoveHandler(e) {
     if (relativeX > 0 && relativeX < canvas.width) {
         paddleX = relativeX - paddleWidth / 2;
     }
+}
 
-
-
+function update() {
+  ballX += dx;
+  ballY += dy;
 }
 
 
@@ -173,8 +179,9 @@ function draw() {
         drawBricks();
         drawPaddle();
         drawBall();
+        update();
     }
-    requestAnimationFrame(draw);
+    requestId = requestAnimationFrame(draw);
 }
 
 document.addEventListener("keydown", function (event) {
@@ -191,5 +198,12 @@ document.addEventListener("keydown", function (event) {
         }
     }
 });
-draw();
 
+
+function play() {
+  cancelAnimationFrame(requestId);
+  
+  draw();
+}
+
+play();
