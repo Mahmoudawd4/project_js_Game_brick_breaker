@@ -97,6 +97,12 @@ const screenText = {
         ctx.textAlign = "center";
         ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
     },
+    pause() {
+        ctx.font = "50px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("Continue", canvas.width / 2, canvas.height / 2);
+    },
 };
 
 
@@ -198,9 +204,12 @@ function keyDownHandler(e) {
         leftPressed = true;
     }
     // space button -- pause
-    if (e.keyCode === 32) {
+    if (e.key === ' ') {
         if (isStarted && !isLost && !isWin) {
             isPaused = !isPaused;
+            if(!isPaused) {
+                play();
+            }
         }
     }
 }
