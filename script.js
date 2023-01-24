@@ -128,6 +128,18 @@ function mouseMoveHandler(e) {
 function update() {
   ballX += dx;
   ballY += dy;
+  if (rightPressed) {
+    paddleX += ballSpeed;
+    if (paddleX + paddleWidth > canvas.width){
+      paddleX = canvas.width - paddleWidth;
+    }
+  }
+  if (leftPressed) {
+    paddleX -= ballSpeed;
+    if (paddleX < 0){
+      paddleX = 0;
+    }
+  }
 }
 
 function checkWallsCollision() {
@@ -180,9 +192,9 @@ function drawBricks() {
 }
 
 function keyDownHandler(e) {
-    if (e.keyCode === 39) {
+    if (e.key === 'ArrowRight') {
         rightPressed = true;
-    } else if (e.keyCode === 37) {
+    } else if (e.key === 'ArrowLeft') {
         leftPressed = true;
     }
     // space button -- pause
@@ -194,9 +206,9 @@ function keyDownHandler(e) {
 }
 
 function keyUpHandler(e) {
-    if (e.keyCode === 39) {
+    if (e.key === 'ArrowRight') {
         rightPressed = false;
-    } else if (e.keyCode === 37) {
+    } else if (e.key === 'ArrowLeft') {
         leftPressed = false;
     }
 }
