@@ -84,6 +84,13 @@ function drawBall() {
 }
 
 
+function drawLives() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#008080";
+    ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+}
+
+
 const screenText = {
     start() {
         ctx.font = "50px Arial";
@@ -247,6 +254,7 @@ function draw() {
         drawBricks();
         drawPaddle();
         drawBall();
+        drawLives();
         update();
         checkWallsCollision();
 
