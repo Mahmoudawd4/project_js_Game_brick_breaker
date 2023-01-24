@@ -184,6 +184,7 @@ function checkWallsCollision() {
     } 
 }
 
+const colors = ['red', '#000080', 'yellow', 'blue', 'green','black','#000080'];
 
 function drawBricks() {
     for (let c = 0; c < brickColumnCount; c++) {
@@ -195,8 +196,7 @@ function drawBricks() {
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle =
-                "#000080";
+                ctx.fillStyle =colors[c];
                 ctx.fill();
                 ctx.closePath();
             }
