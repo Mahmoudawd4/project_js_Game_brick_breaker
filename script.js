@@ -135,6 +135,10 @@ function checkWallsCollision() {
     const hitRightWall = ()=>(ballX + (ballRadius*2) > canvas.width);
     const hitTop = ()=>(ballY < 0);
     const hitBottom = ()=>(ballY + (ballRadius*2) > canvas.height);
+    const hitPaddle = () => (ballY + 2 * ballRadius > canvas.height - paddleHeight &&
+    ballY + ballRadius < canvas.height && 
+    ballX + ballRadius > paddleX &&
+    ballX + ballRadius < paddleX + paddleWidth);
 
     if (hitLeftWall()) {
         dx = -dx;
@@ -145,11 +149,14 @@ function checkWallsCollision() {
     } else if (hitTop()) {
         dy = -dy;
         ballY = 0;
+    } else if (hitPaddle()) {
+        dy = -dy;
+        ballY = canvas.height - paddleHeight - 2 * ballRadius;
     } else if (hitBottom()) {
         lives--;
         ballInit();
         isLost = lives === 0 ? true : false;
-    }
+    } 
 }
 
 
