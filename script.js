@@ -8,8 +8,8 @@ const ctx = canvas.getContext("2d");
 
 // Paddle
 const paddleHeight = 10;
-const paddleWidth = 75;
-let paddleX = (canvas.width - paddleWidth) / 2;
+const paddleWidth = 150;
+let paddleX = (canvas.width - paddleWidth) /2;
 let paddleY = (canvas.height - paddleHeight);
 
 // The ball
@@ -22,9 +22,9 @@ let dy = -ballSpeed; // Up
 
 // Ball initialization
 function ballInit() {
-    let ballRadius = 5;
-    ballX = canvas.width / 2;
-    ballY = canvas.height - paddleHeight - ballRadius;
+    ballRadius = 5;
+    ballX = paddleX;
+    ballY = paddleY;
     ballSpeed = 7;
     dx = ballSpeed * (Math.random() * 2 - 1);  // Random trajectory
     dy = -ballSpeed; // Up
@@ -40,7 +40,7 @@ let leftPressed = false;
 
 
 // Bricks info var
-const brickRowCount = 15;
+const brickRowCount = 16;
 const brickColumnCount = 10;
 const brickWidth = 50;
 const brickHeight = 20;
@@ -51,20 +51,18 @@ const brickOffsetLeft = 70;
 
 
 
-const bricks = [];
+var bricks = [];
 
 for (let c = 0; c < brickColumnCount; c++) {
     bricks[c] = [];
     for (let r = 0; r < brickRowCount; r++) {
         bricks[c][r] = {
-            x: 0,
-            y: 0,
-            status: 1,
-            type: "regular",
+            x : 0,
+            y : 0,
+            status : 1
         };
     }
 }
-
 
 
 //print screen 
@@ -184,6 +182,10 @@ function checkWallsCollision() {
     } 
 }
 
+
+
+
+
 const colors = ['red', '#000080', 'yellow', 'blue', 'green','black','#000080'];
 
 function drawBricks() {
@@ -238,6 +240,25 @@ function mouseMoveHandler(e) {
 }
 
 
+function brickCollision(){
+    for(c=0; c<brickColumnCount;c++){
+        for(r=0; r<brickRowCount; r++){
+            let b = bricks[c][r];
+            if(b.status === 1){
+                if(ballX > b.x && ballX < b.x + brickWidth && ballY > b.y && ballY < b.y + brickHeight){
+                    dy = -dy;
+                    b.status = 0;
+                    score++;
+                    if (score === brickRowCount*brickColumnCount){
+                        alert('Congratulations!!');
+                        document.location.reload();
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 
 function draw() {
@@ -257,6 +278,7 @@ function draw() {
         drawLives();
         update();
         checkWallsCollision();
+        brickCollision();
 
 
         requestId = requestAnimationFrame(draw);
