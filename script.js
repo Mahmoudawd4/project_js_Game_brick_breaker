@@ -5,6 +5,9 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 
+//init
+let countLevels = 4; 
+let curLevel = parseInt( localStorage.getItem("level")) % countLevels || 1;
 
 // Paddle
 const paddleHeight = 10;
@@ -188,21 +191,13 @@ function checkWallsCollision() {
 
 const colors = ['red', '#000080', 'yellow', 'blue', 'green','black','#000080'];
 
-function drawBricks() {
-    for (let c = 0; c < brickColumnCount; c++) {
-        for (let r = 0; r < brickRowCount; r++) {
-            if (bricks[c][r].status === 1) {
-                let brickX = r * (brickWidth + brickPadding) + brickOffsetLeft;
-                let brickY = c * (brickHeight + brickPadding) + brickOffsetTop;
-                bricks[c][r].x = brickX;
-                bricks[c][r].y = brickY;
-                ctx.beginPath();
-                ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle =colors[c];
-                ctx.fill();
-                ctx.closePath();
-            }
-        }
+function drawBricks(lvl) {
+    if (lvl == 1) {
+        Level.one()
+    } else if (lvl == 2) {
+        Level.two()
+    } else if (lvl == 3) {
+        Level.three()
     }
 }
 
@@ -250,6 +245,7 @@ function brickCollision(){
                     b.status = 0;
                     score++;
                     if (score === brickRowCount*brickColumnCount){
+                        localStorage.setItem("level", curLevel++);
                         alert('Congratulations!!');
                         document.location.reload();
                     }
@@ -272,7 +268,7 @@ function draw() {
     } else if (isPaused) {
         screenText.pause();
     } else {
-        drawBricks();
+        drawBricks(curLevel);
         drawPaddle();
         drawBall();
         drawLives();
@@ -291,7 +287,7 @@ document.addEventListener("keydown", function (event) {
         isLost = false;
         isWin = false;
         score = 0;
-        lives = 3;
+        lives = 4 - curLevel;
         for (let c = 0; c < brickColumnCount; c++) {
             for (let r = 0; r < brickRowCount; r++) {
                 bricks[c][r].status = 1;
@@ -310,3 +306,71 @@ function play() {
 }
 
 play();
+
+
+class Level {
+    static one() {
+        ballSpeed = 5;
+        for (let c = 0; c < brickColumnCount; c++) {
+            let brickX = 0, brickY = 0;
+            for (let r = c; r < brickRowCount / 2; r++) {
+                if (bricks[c][r].status) {
+                    brickX = r * (brickWidth + brickPadding) + brickOffsetLeft;
+                    brickY = c * (brickHeight + brickPadding) + brickOffsetTop;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                    ctx.fillStyle = colors[c];
+                    ctx.fill();
+                    ctx.closePath();
+                }
+                brickX = 0, brickY = 0;
+            }
+        }
+
+    }
+
+    static two() {
+        ballSpeed = 8;
+        for (let c = 0; c < brickColumnCount; c++) {
+            for (let r = c; r < brickRowCount / 2; r++) {
+                bricks[c][r].status = 2;
+            }
+        }
+        for (let c = 0; c < brickColumnCount; c++) {
+            for (let r = 0; r < brickRowCount; r++) {
+                if (bricks[c][r].status === 1) {
+                    let brickX = r * (brickWidth + brickPadding) + brickOffsetLeft;
+                    let brickY = c * (brickHeight + brickPadding) + brickOffsetTop;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                    ctx.fillStyle = colors[c];
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+        }
+    }
+
+    static three() {
+        ballSpeed = 7;
+        for (let c = 0; c < brickColumnCount; c++) {
+            for (let r = 0; r < brickRowCount; r++) {
+                if (bricks[c][r].status === 1) {
+                    let brickX = r * (brickWidth + brickPadding) + brickOffsetLeft;
+                    let brickY = c * (brickHeight + brickPadding) + brickOffsetTop;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                    ctx.fillStyle = colors[c];
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+        }
+    }
+}
