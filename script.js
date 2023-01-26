@@ -48,8 +48,8 @@ let key = {
 let brick = {
     rowCount:16,
     columnCount:10,
-    width:80,
-    height:25,
+    width:50,
+    height:20,
     padding:2,
     offSetTop:2,
     offSetLeft:70
@@ -252,8 +252,7 @@ function brickCollision(){
                     b.status = 0;
                     game.score++;
                     if (game.score === brick.rowCount*brick.columnCount){
-                        curLevel++;
-                        localStorage.setItem("level", curLevel);
+                        localStorage.setItem("level", curLevel++);
                         alert('Congratulations!!');
                         document.location.reload();
                     }
