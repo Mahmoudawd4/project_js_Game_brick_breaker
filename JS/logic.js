@@ -79,13 +79,12 @@ function brickCollision() {
                     if(b.health < 1){
                         b.status = 0;
                     }
-                    if (game.score === brick.rowCount * brick.columnCount * 1.5) {
+                    // if (game.score === brick.rowCount * brick.columnCount * 1.5) {
                     //     localStorage.setItem("level", curLevel++);
                     //     alert('Congratulations!!');
                     //     document.location.reload();
 
-                    isWin = true;
-                    }
+                    // }
                 }
             }
         }
@@ -93,8 +92,10 @@ function brickCollision() {
     
     if (ifStatZero === true) {
         localStorage.setItem("level", curLevel++);
-        alert('Congratulations!!');
-        document.location.reload();
+        // alert('Congratulations!!');
+        // document.location.reload();
+        isWin = true;
+
     }
 }
 
