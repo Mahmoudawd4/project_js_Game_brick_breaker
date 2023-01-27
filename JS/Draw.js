@@ -16,6 +16,12 @@ function drawgame() {
     ctx.fillText("lives: " + game.lives, canvas.width - 65, 20);
 }
 
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("Score: " + game.score, 40, 15);
+}
+
 function drawBall() {
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.Radius, 0, 2 * Math.PI);
@@ -57,7 +63,11 @@ function draw() {
         drawPaddle();
         drawBall();
         drawgame();
+        
         update();
+
+         drawScore();
+
         checkWallsCollision();
         brickCollision();
 
