@@ -44,7 +44,8 @@ function drawBricks(lvl) {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!game.isStarted) {
-        screenText.start();
+        // screenText.start();
+        screenText.menu();
     } else if (game.isLost) {
         screenText.lost();
     } else if (game.isWin) {
