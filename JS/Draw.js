@@ -81,7 +81,7 @@ function updateHeart() {
 function showHeart() {
     // heartX = brick[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].height;
     // heartY = brick[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].width;
-    heartX = bricks[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].x;
+    heartX = bricks[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].x+300;
     heartY = bricks[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].y;
     heartVisible = true;
 }
