@@ -79,6 +79,12 @@ function brickCollision() {
                     if(b.health < 1){
                         b.status = 0;
                     }
+
+                     //new add heart 
+                     bricksHit++;
+                     if (bricksHit > 1) {
+                         showHeart();
+                     }
                     // if (game.score === brick.rowCount * brick.columnCount * 1.5) {
                     //     localStorage.setItem("level", curLevel++);
                     //     alert('Congratulations!!');
