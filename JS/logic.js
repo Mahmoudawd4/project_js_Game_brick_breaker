@@ -58,8 +58,6 @@ function paddleCollisionBall() {
         } else {
             ball.dx = ((xMinOrPos) * Math.abs(((ball.x - paddleX) / paddle.width) - 1) + .5) * ball.Speed;
         }
-        console.log(xMinOrPos);
-        console.log(xDirBall);
         ball.dy *= -1;
     }
 }
@@ -71,7 +69,11 @@ function brickCollision() {
             if (b.status === 1) {
                 if (ball.x > b.x && ball.x < b.x + brick.width && ball.y > b.y && ball.y < b.y + brick.height) {
                     ball.dy = -ball.dy;
-                    b.status = 0;
+                    console.log(b.health);
+                    b.health -= 1;
+                    if(b.health < 1){
+                        b.status = 0;
+                    }
                     game.score++;
                     if (game.score === brick.rowCount * brick.columnCount) {
                         localStorage.setItem("level", curLevel++);
