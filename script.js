@@ -62,10 +62,14 @@ for (let c = 0; c < brickColumnCount; c++) {
         bricks[c][r] = {
             x : 0,
             y : 0,
-            status : 1
+            status : 1,
+            //isLife: false
         };
     }
 }
+
+
+
 
 
 //print screen 
@@ -105,13 +109,21 @@ const screenText = {
         ctx.textAlign = "center";
         ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
     },
+    win() {
+        ctx.font = "50px Arial";
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center";
+        ctx.fillText("Congratulations! You did it!", canvas.width / 2, canvas.height / 2);
+    },
     pause() {
         ctx.font = "50px Arial";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.fillText("Continue", canvas.width / 2, canvas.height / 2);
     },
+
 };
+
 
 
 
@@ -123,6 +135,55 @@ let isWin = false;
 let score = 0;
 let lives = 3;
 let requestId;
+
+
+//new
+
+// Heart
+// Heart's start coordinates
+let heartX = canvas.width / 2;
+let heartY = 0;
+let heartRadius = 5;
+let heartSpeed = 5;
+let heartVisible = false;
+
+// Heart image
+const heartImg = new Image();
+heartImg.src = "./heart.png";
+
+// Draw heart
+function drawHeart() {
+    if (heartVisible) {
+        ctx.drawImage(heartImg, heartX - heartRadius, heartY - heartRadius, heartRadius * 2, heartRadius * 2);
+    }
+}
+
+// Update heart position
+function updateHeart() {
+    if (heartVisible) {
+        heartY += heartSpeed;
+        if (heartY > canvas.height) {
+            heartVisible = false;
+        }
+
+        // Check for collision with paddle
+        if (heartX > paddleX && heartX < paddleX + paddleWidth && heartY > paddleY - heartRadius && heartY < paddleY + paddleHeight + heartRadius) {
+            heartVisible = false;
+            lives++;
+            score++;
+
+        }
+    }
+}
+
+// Show heart
+function showHeart() {
+    heartX = bricks[Math.floor(Math.random() * brickColumnCount)][Math.floor(Math.random() * brickRowCount)].x;
+    heartY = bricks[Math.floor(Math.random() * brickColumnCount)][Math.floor(Math.random() * brickRowCount)].y;
+    heartVisible = true;
+}
+
+let bricksHit = 0;
 
 
 document.addEventListener("keydown", keyDownHandler);
@@ -137,6 +198,10 @@ function mouseMoveHandler(e) {
         paddleX = relativeX - paddleWidth / 2;
     }
 }
+
+
+
+
 
 // Ball Movement
 function update() {
@@ -186,8 +251,119 @@ function checkWallsCollision() {
 }
 
 
+//  add new fe
 
 
+// Power-up object
+// let powerUp = {
+//     type: "extraLife",
+//     x: 0,
+//     y: 0,
+//     status: "inactive"
+// }
+
+// // In the brick creation loop
+// bricks[c][r].isPowerUp = Math.random() < 0.1; // 10% chance of a brick being a power-up
+
+// // In the collision detection logic
+// if (bricks[c][r].isPowerUp && bricks[c][r].status === 1) {
+//     activatePowerUp(bricks[c][r].x, bricks[c][r].y);
+//     bricks[c][r].status = 0;
+// }
+
+// function activatePowerUp(x, y) {
+//     powerUp.x = x;
+//     powerUp.y = y;
+//     powerUp.status = "active";
+//     lives++;
+//     powerUpSound.play();
+// }
+
+// // In the main game loop
+// if (powerUp.status === "active") {
+//     drawPowerUp(powerUp.x, powerUp.y);
+// }
+
+// function drawPowerUp(x, y) {
+//     ctx.fillStyle = "green";
+//     ctx.beginPath();
+//     ctx.arc(x, y, 5, 0, Math.PI*2);
+//     ctx.fill();
+// }
+
+
+
+// // Power-up types
+// const powerUpTypes = ["extraLife", "widerPaddle"];
+
+// // Power-up probability (percentage chance of power-up spawning in a brick)
+// const powerUpProbability = 0.1;
+
+// // Power-up duration (in frames)
+// const powerUpDuration = 300;
+
+// // Power-up state
+// let activePowerUp = null;
+// let powerUpTimer = 0;
+
+// // Add a power-up to a brick
+// function addPowerUp(brick) {
+//     if (Math.random() < powerUpProbability) {
+//         brick.powerUp = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
+//     }
+// }
+
+// // Handle power-up activation
+// function activatePowerUp(powerUp) {
+//     activePowerUp = powerUp;
+//     powerUpTimer = powerUpDuration;
+//     if (powerUp === "extraLife") {
+//         lives++;
+//     } else if (powerUp === "widerPaddle") {
+//         paddleWidth *= 1.5;
+//     }
+// }
+
+// // Handle power-up deactivation
+// function deactivatePowerUp() {
+//     activePowerUp = null;
+//     if (powerUp === "extraLife") {
+//         lives--;
+//     } else if (powerUp === "widerPaddle") {
+//         paddleWidth /= 1.5;
+//     }
+// }
+
+// // Check for power-up collision
+// function checkPowerUpCollision() {
+//     if (activePowerUp) {
+//         if (x > paddleX && x < paddleX + paddleWidth && y > paddleY) {
+//             deactivatePowerUp();
+//         }
+//     }
+// }
+
+// // Update power-up state
+// function updatePowerUps() {
+//     if (activePowerUp) {
+//         powerUpTimer--;
+//         if (powerUpTimer === 0) {
+//             deactivatePowerUp();
+//         }
+//     }
+// }
+
+// // Draw power-up state
+// function drawPowerUps() {
+//     if (activePowerUp) {
+//         ctx.font = "16px Arial";
+//         ctx.fillStyle = "black";
+//         ctx.textAlign = "center";
+//         ctx.fillText(`Active Power-up: ${activePowerUp}`, canvas.width / 2, 20);
+//     }
+// }
+
+// 
 
 const colors = ['red', '#000080', 'yellow', 'blue', 'green','black','#000080'];
 
@@ -227,6 +403,8 @@ function keyUpHandler(e) {
 }
 
 
+
+
 function mouseMoveHandler(e) {
     let relativeX = e.clientX - canvas.offsetLeft;
     if (relativeX > 0 && relativeX < canvas.width) {
@@ -244,15 +422,46 @@ function brickCollision(){
                     dy = -dy;
                     b.status = 0;
                     score++;
+
+                    //new add heart 
+                    bricksHit++;
+                            if (bricksHit > 1) {
+                                showHeart();
+                            }
+
+
                     if (score === brickRowCount*brickColumnCount){
                         localStorage.setItem("level", curLevel++);
                         alert('Congratulations!!');
-                        document.location.reload();
+                        //document.location.reload();
+                        isWin = true;
                     }
+
+                    // if (bricks[c][r].status === 1) {
+                    //     if (ballX > bricks[c][r].x && ballX < bricks[c][r].x + brickWidth && ballY > bricks[c][r].y && ballY < bricks[c][r].y + brickHeight) {
+                    //         dy = -dy;
+                    //         bricks[c][r].status = 0;
+                            
+                    //     }
+                    //     ctx.beginPath();
+                    //     ctx.rect(bricks[c][r].x, bricks[c][r].y, brickWidth, brickHeight);
+                    //     ctx.fillStyle = "#0095DD";
+                    //     ctx.fill();
+                    //     ctx.closePath();
+                    // }
+
+
                 }
             }
         }
     }
+}
+
+
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#008080";
+    ctx.fillText("Score: " + score, 40, 15);
 }
 
 
@@ -270,9 +479,15 @@ function draw() {
     } else {
         drawBricks(curLevel);
         drawPaddle();
+        drawScore();
         drawBall();
         drawLives();
         update();
+        
+        //new heart 
+        drawHeart();
+        updateHeart();
+
         checkWallsCollision();
         brickCollision();
 
@@ -325,6 +540,8 @@ class Level {
                     ctx.fill();
                     ctx.closePath();
                 }
+                
+
                 brickX = 0, brickY = 0;
             }
         }
