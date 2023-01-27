@@ -46,7 +46,6 @@ canvas.onclick = function(e){
 }
 
 canvas.onmousemove = function(e){
-    console.log(e);
     if(e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100){
         if(e.offsetY >= 150 && e.offsetY <= 225){
             canvas.style.cursor = "pointer";
