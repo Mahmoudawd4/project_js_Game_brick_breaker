@@ -63,28 +63,36 @@ function paddleCollisionBall() {
 }
 
 function brickCollision() {
+    let ifStatZero = true;
     for (c = 0; c < brick.columnCount; c++) {
         for (r = 0; r < brick.rowCount; r++) {
             let b = bricks[c][r];
             if (b.status === 1) {
+                ifStatZero = false;
                 if (ball.x > b.x && ball.x < b.x + brick.width && ball.y > b.y && ball.y < b.y + brick.height) {
                     ball.dy = -ball.dy;
                     console.log(b.health);
                     if (b.health < 3){
                         b.health -= 1;
+                        game.score++;
                     }
                     if(b.health < 1){
                         b.status = 0;
                     }
-                    game.score++;
-                    if (game.score === brick.rowCount * brick.columnCount) {
-                        localStorage.setItem("level", curLevel++);
-                        alert('Congratulations!!');
-                        document.location.reload();
-                    }
+                    // if (game.score === brick.rowCount * brick.columnCount * 1.5) {
+                    //     localStorage.setItem("level", curLevel++);
+                    //     alert('Congratulations!!');
+                    //     document.location.reload();
+                    // }
                 }
             }
         }
+    }
+    
+    if (ifStatZero === true) {
+        localStorage.setItem("level", curLevel++);
+        alert('Congratulations!!');
+        document.location.reload();
     }
 }
 
