@@ -11,7 +11,7 @@ class Level {
                     bricks[c][r].y = brickY;
                     ctx.beginPath();
                     ctx.rect(brickX, brickY, brick.width, brick.height);
-                    ctx.fillStyle = colors[c];
+                    ctx.fillStyle = colors[bricks[c][r].health];
                     ctx.fill();
                     ctx.closePath();
                 }

@@ -18,11 +18,16 @@ function initBricks() {
     for (let c = 0; c < brick.columnCount; c++) {
         bricks[c] = [];
         for (let r = 0; r < brick.rowCount; r++) {
+            let curHeal = 2;
+            let randHealth = Math.ceil(Math.random() * 10);
+            if(randHealth > 2 && randHealth < 5){
+                curHeal = 3;
+            }
             bricks[c][r] = {
                 x : 0,
                 y : 0,
                 status : 1,
-                health: 2
+                health: curHeal
             };
         }
     }

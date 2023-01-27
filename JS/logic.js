@@ -70,7 +70,9 @@ function brickCollision() {
                 if (ball.x > b.x && ball.x < b.x + brick.width && ball.y > b.y && ball.y < b.y + brick.height) {
                     ball.dy = -ball.dy;
                     console.log(b.health);
-                    b.health -= 1;
+                    if (b.health < 3){
+                        b.health -= 1;
+                    }
                     if(b.health < 1){
                         b.status = 0;
                     }
