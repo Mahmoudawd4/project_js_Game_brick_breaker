@@ -24,9 +24,9 @@ function initBricks() {
                 curHeal = 3;
             }
             bricks[c][r] = {
-                x : 0,
-                y : 0,
-                status : 1,
+                x : r * (brick.width + brick.padding) + brick.offSetLeft,
+                y : c * (brick.height + brick.padding) + brick.offSetTop,
+                status : 0,
                 health: curHeal
             };
         }

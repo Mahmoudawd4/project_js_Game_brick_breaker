@@ -1,5 +1,11 @@
-let textColor = "black";
+let easyLvlColor = "black";
+let mediumLvlColor = "black";
+let hardLvlColor = "black";
+
 const screenText = {
+    clear() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    },
     start() {
         ctx.font = "50px Arial";
         ctx.fillStyle = "black";
@@ -8,11 +14,14 @@ const screenText = {
     },
     menu() {
         ctx.font = "50px Arial";
-        ctx.fillStyle = textColor;
+        ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.fillText("Click on Level and Press enter", canvas.width / 2, 60);
+        ctx.fillStyle = easyLvlColor;
         ctx.fillText("Easy", canvas.width / 2, 200);
+        ctx.fillStyle = mediumLvlColor;
         ctx.fillText("medium", canvas.width / 2, 300);
+        ctx.fillStyle = hardLvlColor;
         ctx.fillText("hard", canvas.width / 2, 400);
     },
     lost() {
@@ -37,38 +46,73 @@ const screenText = {
 };
 
 canvas.onclick = function(e){
-    if(e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100){
-        if(e.offsetY >= 150 && e.offsetY <= 225){
-            curLevel = 1;
-        }else if(e.offsetY >= 250 && e.offsetY <= 325){
-            curLevel = 2;
-        }else if(e.offsetY >= 350 && e.offsetY <= 425){
-            curLevel = 3;
-        }else{
-            canvas.style.cursor = "initial";
+    if (!game.isStarted) {
+        const MiddleX = () => e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100;
+        const EasyY = () => e.offsetY >= 150 && e.offsetY <= 225;
+        const MediumY = () => e.offsetY >= 250 && e.offsetY <= 325;
+        const HardY = () => e.offsetY >= 350 && e.offsetY <= 425;
+
+        if(MiddleX()){
+            if(EasyY()){
+                curLevel = 1;
+            }else if(MediumY()){
+                curLevel = 2;
+            }else if(HardY()){
+                curLevel = 3;
+            }
         }
-
-
     }
 }
 
+
+let changed = 0;
 canvas.onmousemove = function(e){
-    if(e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100){
-        if(e.offsetY >= 150 && e.offsetY <= 225){
-            canvas.style.cursor = "pointer";
-            textColor = "red";
-        }else if(e.offsetY >= 250 && e.offsetY <= 325){
-            canvas.style.cursor = "pointer";
-            textColor = "red";
-        }else if(e.offsetY >= 350 && e.offsetY <= 425){
-            canvas.style.cursor = "pointer";
-            textColor = "red";
+    if (!game.isStarted) {
+        const MiddleX = () => e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100;
+        const EasyY = () => e.offsetY >= 150 && e.offsetY <= 225;
+        const MediumY = () => e.offsetY >= 250 && e.offsetY <= 325;
+        const HardY = () => e.offsetY >= 350 && e.offsetY <= 425;
+
+        if(MiddleX()){
+            if(EasyY()){
+                canvas.style.cursor = "pointer";
+                easyLvlColor = "red";
+                changed = 1;
+                screenText.clear();
+                screenText.menu();
+            }else if(MediumY()){
+                canvas.style.cursor = "pointer";
+                mediumLvlColor = "red";
+                changed = 1;
+                screenText.clear();
+                screenText.menu();
+            }else if(HardY()){
+                canvas.style.cursor = "pointer";
+                hardLvlColor = "red";
+                changed = 1;
+                screenText.clear();
+                screenText.menu();
+            }else{
+                if (changed) {
+                    canvas.style.cursor = "initial";
+                    easyLvlColor = "black";
+                    mediumLvlColor = "black";
+                    hardLvlColor = "black";
+                    changed = 0;
+                    screenText.clear();
+                    screenText.menu();
+                }
+            }
         }else{
-            canvas.style.cursor = "initial";
-            textColor = "black";
+            if (changed) {
+                canvas.style.cursor = "initial";
+                easyLvlColor = "black";
+                mediumLvlColor = "black";
+                hardLvlColor = "black";
+                changed = 0;
+                screenText.clear();
+                screenText.menu();
+            }
         }
-    }else{
-        canvas.style.cursor = "initial";
-        textColor = "black";
     }
 }

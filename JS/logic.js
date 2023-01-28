@@ -64,21 +64,29 @@ function paddleCollisionBall() {
 
 function brickCollision() {
     let ifStatZero = true;
+    let directionChanged = false;
+    const isBallInsideBrick = (b) =>
+    (ball.x + 2 * ball.Radius > b.x &&
+    ball.x < b.x + brick.width && 
+    ball.y + 2 * ball.Radius > b.y && 
+    ball.y - ball.Radius< b.y + brick.height);
     for (c = 0; c < brick.columnCount; c++) {
         for (r = 0; r < brick.rowCount; r++) {
             let b = bricks[c][r];
             if (b.status === 1) {
                 ifStatZero = false;
-                if (ball.x > b.x && ball.x < b.x + brick.width && ball.y > b.y && ball.y < b.y + brick.height) {
-                    ball.dy = -ball.dy;
-                    console.log(b.health);
-                    if (b.health < 3){
+                if (b.health <= 3 && isBallInsideBrick(b)) {
+                    if (b.health < 3) {
+                        console.log("inside")
                         b.health -= 1;
                         game.score++;
+                        if (b.health < 1) {
+                            b.status = 0;
+                        }
                     }
-                    if(b.health < 1){
-                        b.status = 0;
-                    }
+                    // if(b.health < 1){
+                    //     b.status = 0;
+                    // }
 
                      //new add heart 
                      bricksHit++;
@@ -91,6 +99,11 @@ function brickCollision() {
                     //     document.location.reload();
 
                     // }
+              
+                  if (!directionChanged) {
+                    directionChanged = true;
+                    detectCollisionDirection(b);
+                  }
                 }
             }
         }
@@ -103,6 +116,17 @@ function brickCollision() {
         isWin = true;
 
     }
+}
+
+function detectCollisionDirection(b) {
+  const hitFromLeft = () => ball.x + 2 * ball.Radius - ball.dx <= b.x;
+  const hitFromRight = () => ball.x - ball.dx >= b.x + brick.width;
+
+  if (hitFromLeft() || hitFromRight()) {
+    ball.dx = -ball.dx;
+  } else { // Hit from above or below
+    ball.dy = -ball.dy;
+  }
 }
 
 
@@ -166,12 +190,8 @@ document.addEventListener("keydown", function (event) {
         game.isWin = false;
         game.score = 0;
         game.lives = 3;
+        canvas.style.cursor = "initial";
         initBricks();
-        for (let c = 0; c < brick.columnCount; c++) {
-            for (let r = 0; r < brick.rowCount; r++) {
-                bricks[c][r].status = 1;
-            }
-        }
         ballInit();
         play();
     }
