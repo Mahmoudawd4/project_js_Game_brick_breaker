@@ -6,8 +6,8 @@ let ball = {
 
 // Ball initialization
 function ballInit() {
-    ball.x = paddleX;
-    ball.y = paddleY;
+    ball.x = paddleX + (paddle.width/2);
+    ball.y = paddleY - (ball.Radius*2);
     ball.dx = ball.Speed * (Math.random() * 2 - 1);  // Random trajectory
     ball.dy = -ball.Speed; // Up
 }
