@@ -9,11 +9,7 @@ class Level {
                     bricks[c][r].status = 0;
                 }
                 if (bricks[c][r].status) {
-                    ctx.beginPath();
-                    ctx.rect(bricks[c][r].x, bricks[c][r].y, brick.width, brick.height);
-                    ctx.fillStyle = colors[bricks[c][r].health];
-                    ctx.fill();
-                    ctx.closePath();
+                    drawBrick(bricks[c][r]);
                     drawBrickHealth(bricks[c][r]);
                 }
             }
@@ -36,11 +32,7 @@ class Level {
                     bricks[c][r].status = 0;
                 }
                 if (bricks[c][r].status === 1) {
-                    ctx.beginPath();
-                    ctx.rect(bricks[c][r].x, bricks[c][r].y, brick.width, brick.height);
-                    ctx.fillStyle = colors[c];
-                    ctx.fill();
-                    ctx.closePath();
+                    drawBrick(bricks[c][r]);
                     drawBrickHealth(bricks[c][r]);
                 }
             }
@@ -57,17 +49,30 @@ class Level {
                     bricks[c][r].status = 0;
                 }
                 if (bricks[c][r].status === 1) {
-                    ctx.beginPath();
-                    ctx.rect(bricks[c][r].x, bricks[c][r].y, brick.width, brick.height);
-                    ctx.fillStyle = colors[c];
-                    ctx.fill();
-                    ctx.closePath();
+                    drawBrick(bricks[c][r]);
                     drawBrickHealth(bricks[c][r]);
                 }
             }
         }
     }
 }
+
+function drawBrick(b) {
+    const brickColorStart = () => (b.health < 3? "#ffad00": colors[b.health]);
+    const brickColorEnd = () => (b.health < 3? colors[b.health]: "white");
+
+    ctx.beginPath();
+    // color
+    var my_gradient = ctx.createLinearGradient(b.x, b.y, b.x+brick.width+20, b.y+brick.height+20);
+    my_gradient.addColorStop(0, brickColorStart());
+    my_gradient.addColorStop(1, brickColorEnd());
+    ctx.fillStyle = my_gradient;
+    // rect
+    ctx.rect(b.x, b.y, brick.width, brick.height);
+    ctx.fill();
+    ctx.closePath();
+}
+
 
 function drawBrickHealth(b) {
     const brickCenterX = () => (b.x + brick.width/2);
