@@ -26,7 +26,7 @@ function initBricks() {
             bricks[c][r] = {
                 x : 0,
                 y : 0,
-                status : 1,
+                status : 0,
                 health: curHeal
             };
         }
