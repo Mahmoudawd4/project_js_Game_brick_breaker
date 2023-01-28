@@ -84,6 +84,12 @@ function brickCollision() {
                             b.status = 0;
                         }
                     }
+
+                    //new add heart
+                    bricksHit++;
+                    if (bricksHit > 1) {
+                        showHeart();
+                    }
               
                   if (!directionChanged) {
                     directionChanged = true;

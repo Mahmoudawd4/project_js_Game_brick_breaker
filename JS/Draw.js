@@ -16,6 +16,12 @@ function drawgame() {
     ctx.fillText("lives: " + game.lives, canvas.width - 65, 20);
 }
 
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("Score: " + game.score, 40, 15);
+}
+
 function drawBall() {
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.Radius, 0, 2 * Math.PI);
@@ -31,6 +37,53 @@ function drawPaddle() {
     ctx.fill();
     ctx.closePath();
 }
+
+// Heart
+// Heart's start coordinates
+let heartX = canvas.width / 2;
+let heartY = 0;
+let heartRadius = 5;
+let heartSpeed = 5;
+let heartVisible = false;
+
+// Heart image
+const heartImg = new Image();
+heartImg.src = "https://www.freepnglogos.com/uploads/heart-png/heart-image-13.png";
+{/* <a href="https://www.freepnglogos.com/pics/heart" title="Image from freepnglogos.com"><img src="https://www.freepnglogos.com/uploads/heart-png/heart-image-13.png" width="200" alt="heart image" /></a> */}
+// Draw heart
+function drawHeart() {
+    if (heartVisible) {
+        ctx.drawImage(heartImg, heartX - heartRadius, heartY - heartRadius, heartRadius * 2, heartRadius * 2);
+    }
+}
+
+// Update heart position
+function updateHeart() {
+    if (heartVisible) {
+        heartY += heartSpeed;
+        if (heartY > canvas.height) {
+            heartVisible = false;
+        }
+        // Check for collision with paddle
+        if (heartX > paddleX && heartX < paddleX + paddle.width && heartY > paddleY - heartRadius && heartY < paddleY + paddle.height + heartRadius) {
+            heartVisible = false;
+            game.lives++;
+            game.score++;
+        }
+    }
+}
+
+// Show heart
+function showHeart() {
+    // heartX = brick[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].height;
+    // heartY = brick[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].width;
+    heartX = bricks[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].x+300;
+    heartY = bricks[Math.floor(Math.random() * brick.columnCount)][Math.floor(Math.random() * brick.rowCount)].y;
+    heartVisible = true;
+}
+
+let bricksHit = 0;
+
 function drawBricks(lvl) {
     if (lvl == 1) {
         Level.one()
@@ -58,6 +111,9 @@ function draw() {
         drawBall();
         drawgame();
         update();
+        drawScore();
+        drawHeart();
+        updateHeart();
         checkWallsCollision();
         brickCollision();
 
