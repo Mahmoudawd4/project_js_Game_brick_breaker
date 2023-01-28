@@ -157,6 +157,7 @@ document.addEventListener("keydown", function (event) {
         game.isWin = false;
         game.score = 0;
         game.lives = 3;
+        canvas.style.cursor = "initial";
         initBricks();
         ballInit();
         play();

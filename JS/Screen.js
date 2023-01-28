@@ -39,18 +39,20 @@ const screenText = {
 };
 
 canvas.onclick = function(e){
-    const MiddleX = () => e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100;
-    const EasyY = () => e.offsetY >= 150 && e.offsetY <= 225;
-    const MediumY = () => e.offsetY >= 250 && e.offsetY <= 325;
-    const HardY = () => e.offsetY >= 350 && e.offsetY <= 425;
+    if (!game.isStarted) {
+        const MiddleX = () => e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100;
+        const EasyY = () => e.offsetY >= 150 && e.offsetY <= 225;
+        const MediumY = () => e.offsetY >= 250 && e.offsetY <= 325;
+        const HardY = () => e.offsetY >= 350 && e.offsetY <= 425;
 
-    if(MiddleX()){
-        if(EasyY()){
-            curLevel = 1;
-        }else if(MediumY()){
-            curLevel = 2;
-        }else if(HardY()){
-            curLevel = 3;
+        if(MiddleX()){
+            if(EasyY()){
+                curLevel = 1;
+            }else if(MediumY()){
+                curLevel = 2;
+            }else if(HardY()){
+                curLevel = 3;
+            }
         }
     }
 }
@@ -58,30 +60,42 @@ canvas.onclick = function(e){
 
 let changed = 0;
 canvas.onmousemove = function(e){
-    const MiddleX = () => e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100;
-    const EasyY = () => e.offsetY >= 150 && e.offsetY <= 225;
-    const MediumY = () => e.offsetY >= 250 && e.offsetY <= 325;
-    const HardY = () => e.offsetY >= 350 && e.offsetY <= 425;
+    if (!game.isStarted) {
+        const MiddleX = () => e.offsetX >= (canvas.width / 2)- 100 && e.offsetX <= (canvas.width / 2) + 100;
+        const EasyY = () => e.offsetY >= 150 && e.offsetY <= 225;
+        const MediumY = () => e.offsetY >= 250 && e.offsetY <= 325;
+        const HardY = () => e.offsetY >= 350 && e.offsetY <= 425;
 
-    if(MiddleX()){
-        if(EasyY()){
-            canvas.style.cursor = "pointer";
-            easyLvlColor = "red";
-            changed = 1;
-            screenText.clear();
-            screenText.menu();
-        }else if(MediumY()){
-            canvas.style.cursor = "pointer";
-            mediumLvlColor = "red";
-            changed = 1;
-            screenText.clear();
-            screenText.menu();
-        }else if(HardY()){
-            canvas.style.cursor = "pointer";
-            hardLvlColor = "red";
-            changed = 1;
-            screenText.clear();
-            screenText.menu();
+        if(MiddleX()){
+            if(EasyY()){
+                canvas.style.cursor = "pointer";
+                easyLvlColor = "red";
+                changed = 1;
+                screenText.clear();
+                screenText.menu();
+            }else if(MediumY()){
+                canvas.style.cursor = "pointer";
+                mediumLvlColor = "red";
+                changed = 1;
+                screenText.clear();
+                screenText.menu();
+            }else if(HardY()){
+                canvas.style.cursor = "pointer";
+                hardLvlColor = "red";
+                changed = 1;
+                screenText.clear();
+                screenText.menu();
+            }else{
+                if (changed) {
+                    canvas.style.cursor = "initial";
+                    easyLvlColor = "black";
+                    mediumLvlColor = "black";
+                    hardLvlColor = "black";
+                    changed = 0;
+                    screenText.clear();
+                    screenText.menu();
+                }
+            }
         }else{
             if (changed) {
                 canvas.style.cursor = "initial";
@@ -92,16 +106,6 @@ canvas.onmousemove = function(e){
                 screenText.clear();
                 screenText.menu();
             }
-        }
-    }else{
-        if (changed) {
-            canvas.style.cursor = "initial";
-            easyLvlColor = "black";
-            mediumLvlColor = "black";
-            hardLvlColor = "black";
-            changed = 0;
-            screenText.clear();
-            screenText.menu();
         }
     }
 }
