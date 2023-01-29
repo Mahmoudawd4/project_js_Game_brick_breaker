@@ -70,6 +70,8 @@ function brickCollision() {
     ball.x < b.x + brick.width && 
     ball.y + 2 * ball.Radius > b.y && 
     ball.y - ball.Radius< b.y + brick.height);
+    Bonus.drawAll();
+    Bonus.do();
     for (c = 0; c < brick.columnCount; c++) {
         for (r = 0; r < brick.rowCount; r++) {
             let b = bricks[c][r];
@@ -82,8 +84,15 @@ function brickCollision() {
                         game.score++;
                         if (b.health < 1) {
                             b.status = 0;
+                            // may add random bouns when brick breaked
+                            let randGetBonus = Math.random();
+                            if (randGetBonus >= .2 && randGetBonus <= .5) {
+                                let choseTypeOfBonus = Math.ceil(Math.random() * 3 );
+                                new Bonus(choseTypeOfBonus,b.x + brick.width / 2,b.y + brick.height / 2);
+                            }
                         }
                     }
+
 
                     //new add heart
                     bricksHit++;
