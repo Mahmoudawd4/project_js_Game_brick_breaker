@@ -114,6 +114,7 @@ function brickCollision() {
         // alert('Congratulations!!');
         // document.location.reload();
         isWin = true;
+        winSound.play();
 
     }
 }
