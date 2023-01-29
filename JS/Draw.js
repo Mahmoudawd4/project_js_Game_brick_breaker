@@ -38,7 +38,6 @@ function drawPaddle() {
     ctx.closePath();
 }
 
-//new
 
 // Heart
 // Heart's start coordinates
@@ -51,6 +50,8 @@ let heartVisible = false;
 // Heart image
 const heartImg = new Image();
 heartImg.src = "https://www.freepnglogos.com/uploads/heart-png/heart-image-13.png";
+
+
 // Draw heart
 function drawHeart() {
     if (heartVisible) {
@@ -65,7 +66,6 @@ function updateHeart() {
         if (heartY > canvas.height) {
             heartVisible = false;
         }
-
         // Check for collision with paddle
         if (heartX > paddleX && heartX < paddleX + paddle.width && heartY > paddleY - heartRadius && heartY < paddleY + paddle.height + heartRadius) {
             heartVisible = false;
@@ -116,16 +116,9 @@ function draw() {
         drawgame();
         
         update();
-
-         drawScore();
-
-
-         //new heart 
+        drawScore();
         drawHeart();
         updateHeart();
-
-
-
         checkWallsCollision();
         brickCollision();
 
