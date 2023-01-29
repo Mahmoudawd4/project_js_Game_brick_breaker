@@ -30,3 +30,7 @@ function update() {
       }
     }
   }
+
+  const loseSound = document.getElementById("loseSound");
+const hitSound = document.getElementById("hitSound");
+const winSound = document.getElementById("winSound");

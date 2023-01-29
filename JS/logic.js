@@ -82,6 +82,11 @@ function brickCollision() {
                         console.log("inside")
                         b.health -= 1;
                         game.score++;
+
+
+                        hitSound.play();
+
+
                         if (b.health < 1) {
                             b.status = 0;
                             // may add random bouns when brick breaked
@@ -108,11 +113,18 @@ function brickCollision() {
             }
         }
     }
-    
+    // if (isWin) {
+    //     winSound.play();
+    //     // ... other code ...
+    // }
+
     if (ifStatZero === true) {
         localStorage.setItem("level", curLevel++);
-        alert('Congratulations!!');
-        document.location.reload();
+        // alert('Congratulations!!');
+        // document.location.reload();
+        isWin = true;
+        winSound.play();
+
     }
 }
 
@@ -192,6 +204,11 @@ document.addEventListener("keydown", function (event) {
         initBricks();
         ballInit();
         play();
+
+        // if (isLost) {
+        //     loseSound.play();
+        //     // ... other code ...
+        // }
     }
 });
 

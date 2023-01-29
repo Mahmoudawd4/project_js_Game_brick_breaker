@@ -29,6 +29,14 @@ const screenText = {
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+        loseSound.play();
+    },
+
+    win() {
+        ctx.font = "50px Arial";
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center";
+        ctx.fillText("Congratulations! You did it!", canvas.width / 2, canvas.height / 2);
     },
     pause() {
         ctx.font = "50px Arial";

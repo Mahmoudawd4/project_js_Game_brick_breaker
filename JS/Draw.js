@@ -38,6 +38,7 @@ function drawPaddle() {
     ctx.closePath();
 }
 
+
 // Heart
 // Heart's start coordinates
 let heartX = canvas.width / 2;
@@ -49,7 +50,8 @@ let heartVisible = false;
 // Heart image
 const heartImg = new Image();
 heartImg.src = "https://www.freepnglogos.com/uploads/heart-png/heart-image-13.png";
-{/* <a href="https://www.freepnglogos.com/pics/heart" title="Image from freepnglogos.com"><img src="https://www.freepnglogos.com/uploads/heart-png/heart-image-13.png" width="200" alt="heart image" /></a> */}
+
+
 // Draw heart
 function drawHeart() {
     if (heartVisible) {
@@ -69,6 +71,7 @@ function updateHeart() {
             heartVisible = false;
             game.lives++;
             game.score++;
+
         }
     }
 }
@@ -83,6 +86,7 @@ function showHeart() {
 }
 
 let bricksHit = 0;
+
 
 function drawBricks(lvl) {
     if (lvl == 1) {
@@ -110,6 +114,7 @@ function draw() {
         drawPaddle();
         drawBall();
         drawgame();
+        
         update();
         drawScore();
         drawHeart();
