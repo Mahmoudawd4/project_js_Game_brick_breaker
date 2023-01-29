@@ -82,7 +82,7 @@ function brickCollision() {
                         game.score++;
 
 
-                        // hitSound.play();
+                        hitSound.play();
 
 
                         if (b.health < 1) {
