@@ -100,10 +100,10 @@ function brickCollision() {
 
 
                     //new add heart
-                    bricksHit++;
-                    if (bricksHit > 1) {
-                        showHeart();
-                    }
+                    // bricksHit++;
+                    // if (bricksHit > 1) {
+                    //     showHeart();
+                    // }
               
                   if (!directionChanged) {
                     directionChanged = true;
