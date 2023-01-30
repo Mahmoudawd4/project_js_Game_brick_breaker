@@ -29,6 +29,7 @@ function checkWallsCollision() {
     //     ball.y = canvas.height - paddle.height - 2 * ball.Radius;
     // }
     else if (hitBottom()) {
+        loseLive.play();
         game.lives--;
         ballInit();
         game.isLost = game.lives === 0 ? true : false;
