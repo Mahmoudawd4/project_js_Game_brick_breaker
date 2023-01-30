@@ -29,7 +29,9 @@ function checkWallsCollision() {
     //     ball.y = canvas.height - paddle.height - 2 * ball.Radius;
     // }
     else if (hitBottom()) {
-        loseLive.play();
+        if(check){
+            loseLive.play();
+        }
         game.lives--;
         ballInit();
         game.isLost = game.lives === 0 ? true : false;
@@ -80,14 +82,11 @@ function brickCollision() {
                 ifStatZero = false;
                 if (b.health <= 3 && isBallInsideBrick(b)) {
                     if (b.health < 3) {
-                        console.log("inside")
                         b.health -= 1;
                         game.score++;
-
-
-                        hitSound.play();
-
-
+                        if(check){
+                            hitSound.play();
+                        }
                         if (b.health < 1) {
                             b.status = 0;
                             // may add random bouns when brick breaked
