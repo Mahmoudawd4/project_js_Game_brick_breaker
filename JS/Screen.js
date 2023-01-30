@@ -5,6 +5,8 @@ let hardLvlColor = "black";
 const screenText = {
     clear() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image.body,0,0,canvas.width,canvas.height);
+
     },
     start() {
         ctx.font = "50px Arial";
@@ -13,16 +15,16 @@ const screenText = {
         ctx.fillText("Press Enter to Start game ", canvas.width / 2, canvas.height / 2);
     },
     menu() {
-        ctx.font = "50px Arial";
-        ctx.fillStyle = "black";
+        ctx.font = "italic 60px serif";
+        ctx.fillStyle = "blue";
         ctx.textAlign = "center";
-        ctx.fillText("Click on Level and Press enter", canvas.width / 2, 60);
+        ctx.fillText("Click on Level and Press Enter", canvas.width / 2, 60);
         ctx.fillStyle = easyLvlColor;
-        ctx.fillText("Easy", canvas.width / 2, 200);
+        ctx.fillText("Beginner", canvas.width / 2, 200);
         ctx.fillStyle = mediumLvlColor;
-        ctx.fillText("medium", canvas.width / 2, 300);
+        ctx.fillText("Medium", canvas.width / 2, 300);
         ctx.fillStyle = hardLvlColor;
-        ctx.fillText("hard", canvas.width / 2, 400);
+        ctx.fillText("Expert", canvas.width / 2, 400);
     },
     lost() {
         ctx.font = "50px Arial";
@@ -34,15 +36,15 @@ const screenText = {
 
     win() {
         ctx.font = "50px Arial";
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "gold";
         ctx.textAlign = "center";
         ctx.fillText("Congratulations! You did it!", canvas.width / 2, canvas.height / 2);
     },
     pause() {
         ctx.font = "50px Arial";
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "blue";
         ctx.textAlign = "center";
-        ctx.fillText("Continue", canvas.width / 2, canvas.height / 2);
+        ctx.fillText("Press Space to Continue", canvas.width / 2, canvas.height / 2);
     },
 };
 
@@ -77,28 +79,28 @@ canvas.onmousemove = function(e){
         if(MiddleX()){
             if(EasyY()){
                 canvas.style.cursor = "pointer";
-                easyLvlColor = "red";
+                easyLvlColor = "blue";
                 changed = 1;
                 screenText.clear();
                 screenText.menu();
             }else if(MediumY()){
                 canvas.style.cursor = "pointer";
-                mediumLvlColor = "red";
+                mediumLvlColor = "blue";
                 changed = 1;
                 screenText.clear();
                 screenText.menu();
             }else if(HardY()){
                 canvas.style.cursor = "pointer";
-                hardLvlColor = "red";
+                hardLvlColor = "blue";
                 changed = 1;
                 screenText.clear();
                 screenText.menu();
             }else{
                 if (changed) {
                     canvas.style.cursor = "initial";
-                    easyLvlColor = "black";
-                    mediumLvlColor = "black";
-                    hardLvlColor = "black";
+                    easyLvlColor = "green";
+                    mediumLvlColor = "cyan";
+                    hardLvlColor = "red";
                     changed = 0;
                     screenText.clear();
                     screenText.menu();
@@ -107,9 +109,9 @@ canvas.onmousemove = function(e){
         }else{
             if (changed) {
                 canvas.style.cursor = "initial";
-                easyLvlColor = "black";
-                mediumLvlColor = "black";
-                hardLvlColor = "black";
+                easyLvlColor = "green";
+                mediumLvlColor = "cyan";
+                hardLvlColor = "red";
                 changed = 0;
                 screenText.clear();
                 screenText.menu();

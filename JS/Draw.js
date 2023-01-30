@@ -100,6 +100,7 @@ function drawBricks(lvl) {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(image.background,0,0,canvas.width,canvas.height);
     if (!game.isStarted) {
         // screenText.start();
         screenText.menu();
