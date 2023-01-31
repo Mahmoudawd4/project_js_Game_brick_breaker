@@ -13,7 +13,8 @@ let game = {
 function drawgame() {
     ctx.font = "20px Arial";
     ctx.fillStyle = "red";
-    ctx.fillText("lives: " + game.lives, canvas.width - 65, 20);
+    ctx.fillText("lives: " + game.lives , canvas.width - 75, 20);
+    ctx.drawImage(image.heart, canvas.width - 40, 12, 20, 14);
 }
 
 function drawScore() {
@@ -86,7 +87,7 @@ let bricksHit = 0;
 
 function drawBricks(lvl) {
     if (lvl == 1) {
-        Level.one()
+        Level.one();
     } else if (lvl == 2) {
         Level.two()
     } else if (lvl == 3) {

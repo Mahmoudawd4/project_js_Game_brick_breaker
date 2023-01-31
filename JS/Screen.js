@@ -28,9 +28,11 @@ const screenText = {
     },
     lost() {
         ctx.font = "50px Arial";
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "red";
         ctx.textAlign = "center";
         ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+        ctx.fillStyle = "blue";
+        ctx.fillText("Press Enter to start again", canvas.width / 2, canvas.height - 25);
         loseSound.play();
     },
 
