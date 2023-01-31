@@ -79,7 +79,9 @@ function brickCollision() {
         for (r = 0; r < brick.rowCount; r++) {
             let b = bricks[c][r];
             if (b.status === 1) {
-                ifStatZero = false;
+                if(b.status === 1 && b.health < 6){
+                    ifStatZero = false;
+                }
                 if (b.health <= 6 && isBallInsideBrick(b)) {
                     if (b.health < 6) {
                         b.health -= 1;
@@ -95,13 +97,6 @@ function brickCollision() {
                         }
                     }
 
-
-                    //new add heart
-                    // bricksHit++;
-                    // if (bricksHit > 1) {
-                    //     showHeart();
-                    // }
-              
                   if (!directionChanged) {
                     directionChanged = true;
                     detectCollisionDirection(b);
