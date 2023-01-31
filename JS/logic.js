@@ -201,14 +201,9 @@ document.addEventListener("keydown", function (event) {
         game.score = 0;
         game.lives = 3;
         canvas.style.cursor = "initial";
-        initBricks();
+        initBricks(curLevel);
         ballInit();
         play();
-
-        // if (isLost) {
-        //     loseSound.play();
-        //     // ... other code ...
-        // }
     }
 });
 

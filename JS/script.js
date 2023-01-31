@@ -5,8 +5,8 @@ let image = {
 background:new Image(),
 body:new Image()
 }
-image.background.src='/project_js_Game_brick_breaker/imgs/bricks_1920x1280.jpg';
-image.body.src = '/project_js_Game_brick_breaker/imgs/stream.png'
+image.background.src='imgs/bricks_1920x1280.jpg';
+image.body.src = 'imgs/stream.png'
 
 const loseSound = document.getElementById("loseSound");
 const hitSound = document.getElementById("hitSound");
