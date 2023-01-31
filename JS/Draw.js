@@ -107,7 +107,8 @@ function draw() {
         screenText.win();
         setTimeout(() => {
           game.isStarted = false;
-        }, 1000)
+        }, 1000);
+        winSound.play();
     } else if (game.isPaused) {
         screenText.pause();
     } else {
