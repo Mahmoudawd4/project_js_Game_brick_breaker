@@ -47,10 +47,6 @@ let heartRadius = 5;
 let heartSpeed = 5;
 let heartVisible = false;
 
-// Heart image
-const heartImg = new Image();
-heartImg.src = "https://www.freepnglogos.com/uploads/heart-png/heart-image-13.png";
-
 
 // Draw heart
 function drawHeart() {
