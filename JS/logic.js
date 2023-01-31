@@ -78,11 +78,10 @@ function brickCollision() {
     for (c = 0; c < brick.columnCount; c++) {
         for (r = 0; r < brick.rowCount; r++) {
             let b = bricks[c][r];
+            let bulletCol = Bullet.collisionBrick(b);
             if (b.status === 1) {
-                if(b.status === 1 && b.health < 6){
-                    ifStatZero = false;
-                }
-                if (b.health <= 6 && isBallInsideBrick(b)) {
+                ifStatZero = false;
+                if ( b.health <= 6 &&  isBallInsideBrick(b)){
                     if (b.health < 6) {
                         b.health -= 1;
                         game.score++;
@@ -96,11 +95,25 @@ function brickCollision() {
                             }
                         }
                     }
-
                   if (!directionChanged) {
                     directionChanged = true;
                     detectCollisionDirection(b);
                   }
+                }
+                if(b.health <= 6 && bulletCol == true){
+                    if (b.health < 6) {
+                        b.health -= 1;
+                        game.score++;
+                        if(check){
+                            hitSound.play();
+                        }
+                        if (b.bonus) {
+                            if(b.health < 1){
+                                b.status = 0;
+                                new Bonus(b.bonus, b.x + brick.width / 2, b.y + brick.height / 2);
+                            }
+                        }
+                    }
                 }
             }
         }

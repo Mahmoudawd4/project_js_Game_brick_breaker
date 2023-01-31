@@ -112,8 +112,10 @@ function draw() {
         drawPaddle();
         drawBall();
         drawgame();
-        
         update();
+        gun = new Gun();
+        gun.mouseFire();
+        bulletMovement();
         drawScore();
         drawHeart();
         updateHeart();
