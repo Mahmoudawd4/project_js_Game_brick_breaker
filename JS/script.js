@@ -7,7 +7,7 @@ body:new Image(),
 heart:new Image()
 }
 image.background.src='imgs/bricks_1920x1280.jpg';
-image.body.src = 'imgs/stream.png'
+image.body.src = 'imgs/stream.jpg'
 image.heart.src = 'imgs/bonuses/1.png'
 
 function myfunction(){
