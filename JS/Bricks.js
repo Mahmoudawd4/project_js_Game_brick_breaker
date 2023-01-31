@@ -9,25 +9,27 @@ let brick = {
     offSetLeft:70
 }
 
-const colors = ['red', '#000080', 'yellow', 'blue', 'green','black','#000080'];
+const colors = ['red', '#000080', 'yellow', 'green', 'blue','red','#000080'];
 
 var Levels = [
     ['OOOOOUOOOOOOOOOO',
      'OOOOOOOOOOOOOOOO',
      'OOOOObOOOOOOOOOO',
-     'OOOOO12B2UOOOOOO',
-     'OOOOO1O2ObOOOOOO',
-     'OOOOO1O2O1OOOOOO',
-     'OOOOO1O2O1OOOOOO',
-     'OOOOO1O2O1OOOOOO',
+     'OOOOO52B2UOOOOOO',
+     'OOOOO4O2ObOOOOOO',
+     'OOOOO3O2O5OOOOOO',
+     'OOOOO1O2O4OOOOOO',
+     'OOOOO1O2O3OOOOOO',
      'OOOOOOO2O1OOOOOO',
      'OOOOOOOOO1OOOOOO'],
 
+
+
     ['OOOOO11OO11OOOOO',
-     'OOOO22222222OOOO',
+     'OOOO2UU22UU2OOOO',
      'OOO12OOBBOO21OOO',
-     'OOO12OO22OO21OOO',
-     'OOO1BOO22OOB1OOO',
+     'OOO12O5225O21OOO',
+     'OOO1BO4224OB1OOO',
      'OOOO12222221OOOO',
      'OOOOO111111OOOOO',
      'OOOOO111111OOOOO',
@@ -38,10 +40,10 @@ var Levels = [
      'OO21b111111b12OO',
      'OO121111111121OO',
      'OOO121U11U121OOO',
-     'OOOO1B1221B1OOOO',
-     'OOOOO121121OOOOO',
-     'OOOOOO1221OOOOOO',
-     'OOOOOOO11OOOOOOO',
+     'OOOO5B1221B5OOOO',
+     'OOOOO421124OOOOO',
+     'OOOOOO3223OOOOOO',
+     'OOOOOOO22OOOOOOO',
      'OOOOOOOOOOOOOOOO',
      'OOOOOOOUUOOOOOOO'],
 ];
@@ -55,14 +57,16 @@ function initBricks() {
       bricks[c] = [];
       var rowColumns = level[c];
       for (let r = 0; r < brick.rowCount; r++) {
-          if (rowColumns.charAt(r) ==='1') {
+          // block numbers from 1 to 5
+          if (!isNaN(rowColumns.charAt(r))) {
             bricks[c][r] = {
               x : r * (brick.width + brick.padding) + brick.offSetLeft,
               y : c * (brick.height + brick.padding) + brick.offSetTop,
               status : 1,
-              health: 1
+              health: parseInt(rowColumns.charAt(r))
             };
           }
+          // empty block
           if (rowColumns.charAt(r) === 'O') {
             bricks[c][r] = {
               x : r * (brick.width + brick.padding) + brick.offSetLeft,
@@ -71,22 +75,16 @@ function initBricks() {
               health: 0
             };
           }
+          // unbreakable block
           if (rowColumns.charAt(r) === 'U'){
              bricks[c][r] = {
               x : r * (brick.width + brick.padding) + brick.offSetLeft,
               y : c * (brick.height + brick.padding) + brick.offSetTop,
               status : 1,
-              health: 3
+              health:  6
             };
           }
-          if (rowColumns.charAt(r) === '2'){
-             bricks[c][r] = {
-              x : r * (brick.width + brick.padding) + brick.offSetLeft,
-              y : c * (brick.height + brick.padding) + brick.offSetTop,
-              status : 1,
-              health: 2
-            };
-          }
+          // Bonus block
           if (rowColumns.charAt(r) === 'B' || rowColumns.charAt(r) === 'b'){
              bricks[c][r] = {
               x : r * (brick.width + brick.padding) + brick.offSetLeft,
@@ -94,6 +92,8 @@ function initBricks() {
               status : 1,
               health: rowColumns.charAt(r) === 'B'? 2: 1,
               bonus: Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              // when the bonus of the two balls is added just uncomment the following line and remove the upper one
+              // bonus: Math.floor(Math.random() * (3 - 1 + 1)) + 1
             };
           }
       }

@@ -16,8 +16,8 @@ class Level {
 }
 
 function drawBrick(b) {
-    const brickColorStart = () => (b.health < 3? "#ffad00": colors[b.health]);
-    const brickColorEnd = () => (b.health < 3? colors[b.health]: "white");
+    const brickColorStart = () => (b.health < 6? "#ffad00": colors[b.health]);
+    const brickColorEnd = () => (b.health < 6? colors[b.health]: "white");
 
     ctx.beginPath();
     // color
@@ -36,7 +36,7 @@ function drawBrickHealth(b) {
     const brickCenterX = () => (b.x + brick.width/2);
     const brickCenterY = () => (b.y + brick.height/2);
     const countCircleRadius = () => (brick.height/3);
-    if (b.health < 3){
+    if (b.health < 6){
         if (!b.bonus) {
             // circle
             ctx.beginPath();

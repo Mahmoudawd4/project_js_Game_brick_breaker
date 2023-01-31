@@ -80,8 +80,8 @@ function brickCollision() {
             let b = bricks[c][r];
             if (b.status === 1) {
                 ifStatZero = false;
-                if (b.health <= 3 && isBallInsideBrick(b)) {
-                    if (b.health < 3) {
+                if (b.health <= 6 && isBallInsideBrick(b)) {
+                    if (b.health < 6) {
                         b.health -= 1;
                         game.score++;
                         if(check){
