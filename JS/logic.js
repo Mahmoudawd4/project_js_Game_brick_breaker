@@ -87,13 +87,10 @@ function brickCollision() {
                         if(check){
                             hitSound.play();
                         }
-                        if (b.health < 1) {
-                            b.status = 0;
-                            // may add random bouns when brick breaked
-                            let randGetBonus = Math.random();
-                            if (randGetBonus >= .2 && randGetBonus <= .5) {
-                                let choseTypeOfBonus = Math.ceil(Math.random() * 3 );
-                                new Bonus(choseTypeOfBonus,b.x + brick.width / 2,b.y + brick.height / 2);
+                        if (b.bonus) {
+                            if(b.health < 1){
+                                b.status = 0;
+                                new Bonus(b.bonus, b.x + brick.width / 2, b.y + brick.height / 2);
                             }
                         }
                     }

@@ -37,18 +37,31 @@ function drawBrickHealth(b) {
     const brickCenterY = () => (b.y + brick.height/2);
     const countCircleRadius = () => (brick.height/3);
     if (b.health < 3){
-        // circle
-        ctx.beginPath();
-        ctx.arc(brickCenterX(), brickCenterY(), countCircleRadius(), 0, 2 * Math.PI);
-        ctx.fillStyle = "#eee";
-        ctx.fill();
+        if (!b.bonus) {
+            // circle
+            ctx.beginPath();
+            ctx.arc(brickCenterX(), brickCenterY(), countCircleRadius(), 0, 2 * Math.PI);
+            ctx.fillStyle = "#eee";
+            ctx.fill();
 
-        // count
-        ctx.font = "10px Arial";
-        ctx.fillStyle = "#000";
-        ctx.textBaseline = 'middle';
-        ctx.textAlign = "center";
-        ctx.fillText(b.health, brickCenterX(), brickCenterY());
+
+            // count
+            ctx.font = "10px Arial";
+            ctx.fillStyle = "#000";
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = "center";
+            ctx.fillText(b.health, brickCenterX(), brickCenterY());
+
+        }else {
+            // Bonus img
+            const bonusImg = new Image();
+            bonusImg.src = Bonus.imgPath + b.bonus + ".png";
+            ctx.drawImage(bonusImg,
+                brickCenterX() - Bonus.radius+2,
+                brickCenterY() - Bonus.radius+2,
+                Bonus.radius * 2-4,
+                Bonus.radius * 2-4);
+        }
     }
 }
 
