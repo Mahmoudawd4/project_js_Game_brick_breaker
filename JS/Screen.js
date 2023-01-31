@@ -2,11 +2,11 @@ let easyLvlColor = "black";
 let mediumLvlColor = "black";
 let hardLvlColor = "black";
 
+
 const screenText = {
     clear() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(image.body,0,0,canvas.width,canvas.height);
-
     },
     start() {
         ctx.font = "50px Arial";

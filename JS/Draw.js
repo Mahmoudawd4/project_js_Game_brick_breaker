@@ -14,7 +14,7 @@ function drawgame() {
     ctx.font = "20px Arial";
     ctx.fillStyle = "red";
     ctx.fillText("lives: " + game.lives , canvas.width - 75, 20);
-    ctx.drawImage(image.heart, canvas.width - 40, 12, 20, 14);
+    ctx.drawImage(image.heart, canvas.width - 40, 12, 16, 14);
 }
 
 function drawScore() {
@@ -105,6 +105,9 @@ function draw() {
         screenText.lost();
     } else if (game.isWin) {
         screenText.win();
+        setTimeout(() => {
+          game.isStarted = false;
+        }, 1000)
     } else if (game.isPaused) {
         screenText.pause();
     } else {
@@ -121,8 +124,25 @@ function draw() {
         updateHeart();
         checkWallsCollision();
         brickCollision();
-
+        checkWin();
 
         game.requestId = requestAnimationFrame(draw);
+    }
+}
+
+function checkWin(){
+    let breakableBricks = 0
+    for (let c = 0; c < brick.columnCount; c++) {
+        for (let r = 0; r < brick.rowCount; r++) {
+            if (bricks[c][r].status === 1) {
+                if(bricks[c][r].health < 6){
+                    breakableBricks++;
+                }
+            }
+        }
+    }
+
+    if (breakableBricks === 0) {
+        game.isWin = true;
     }
 }

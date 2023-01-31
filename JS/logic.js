@@ -2,6 +2,9 @@ document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 document.addEventListener("mousemove", mouseMoveHandler);
 
+//init
+let countLevels = 4;
+let curLevel = parseInt(localStorage.getItem("level")) % countLevels || 1;
 
 
 function checkWallsCollision() {
@@ -24,10 +27,6 @@ function checkWallsCollision() {
         ball.dy = -ball.dy;
         ball.y = 0;
     }
-    //  else if (hitPaddle()) {
-    //     ball.dy = -ball.dy;
-    //     ball.y = canvas.height - paddle.height - 2 * ball.Radius;
-    // }
     else if (hitBottom()) {
         if(check){
             loseLive.play();
@@ -118,18 +117,13 @@ function brickCollision() {
             }
         }
     }
-    // if (isWin) {
-    //     winSound.play();
-    //     // ... other code ...
-    // }
-
-    if (ifStatZero === true) {
+    if (ifStatZero == true) {
         localStorage.setItem("level", curLevel++);
-        // alert('Congratulations!!');
-        // document.location.reload();
         isWin = true;
-        winSound.play();
-
+        if(check){
+            winSound.play();
+        }
+        
     }
 }
 
@@ -144,19 +138,11 @@ function detectCollisionDirection(b) {
   }
 }
 
-
-//init
-let countLevels = 4;
-let curLevel = parseInt(localStorage.getItem("level")) % countLevels || 1;
-
-
 // key
 let key = {
     rightKey: false,
     leftKey: false
 }
-
-
 
 function mouseMoveHandler(e) {
     let relativeX = e.clientX - canvas.offsetLeft;

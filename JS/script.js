@@ -10,6 +10,11 @@ image.background.src='imgs/bricks_1920x1280.jpg';
 image.body.src = 'imgs/stream.png'
 image.heart.src = 'imgs/bonuses/1.png'
 
+function myfunction(){
+    ctx.drawImage(image.body,0,0,canvas.width,canvas.height);
+
+}
+
 const loseSound = document.getElementById("loseSound");
 const hitSound = document.getElementById("hitSound");
 const winSound = document.getElementById("winSound");
